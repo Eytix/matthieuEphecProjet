@@ -1,0 +1,28 @@
+.app-container {
+  height: 100vh;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.app-content {
+  padding: 16px;
+  min-height: calc(100vh - 128px); /* adjust for header + footer */
+  box-sizing: border-box;
+}
+
+.app-footer {
+  position: sticky;
+  bottom: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.hide-desktop {
+  display: none;
+}
