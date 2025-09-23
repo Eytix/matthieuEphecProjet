@@ -1,34 +1,16 @@
 <mat-sidenav-container class="app-container">
 
-  <mat-sidenav #sidenav mode="side" opened>
+  <mat-sidenav mode="side" opened>
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Home</a>
-      <a mat-list-item href="#">About</a>
-      <a mat-list-item href="#">Settings</a>
+      <app-menu></app-menu>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="app-header">
-      <button mat-icon-button (click)="sidenav.toggle()" class="hide-desktop">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>My App</span>
-      <span class="spacer"></span>
-      <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-      </button>
-    </mat-toolbar>
-
-    <div class="app-content">
-      <h1>Welcome</h1>
-      <p>This is the main content area.</p>
-    </div>
-
-    <mat-toolbar color="accent" class="app-footer">
-      <span>© 2025 My App</span>
-    </mat-toolbar>
+    <app-header></app-header>
+    <app-content></app-content>
+    <app-footer></app-footer>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
