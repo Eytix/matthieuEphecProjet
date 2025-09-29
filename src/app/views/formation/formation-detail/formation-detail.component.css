@@ -1,0 +1,15 @@
+.formation-detail {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formation-field {
+  display: flex;
+  gap: 10px;
+}
+
+.formation-field > div:first-child {
+  font-weight: bold;
+}

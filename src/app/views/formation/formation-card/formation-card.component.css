@@ -1,8 +1,5 @@
 .example-card {
   max-width: 400px;
   margin: 16px auto;
-}
-
-.hot-pink {
-  background-color: hotpink !important;
+  cursor: pointer;
 }

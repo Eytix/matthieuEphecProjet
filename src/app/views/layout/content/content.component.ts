@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
-import {FormationCatalogComponent} from '../../formation/formation-catalog/formation-catalog.component';
-import {FormationCreationComponent} from '../../formation/formation-creation/formation-creation.component';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-content',
   imports: [
-    FormationCatalogComponent,
-    FormationCreationComponent
+    RouterOutlet
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'

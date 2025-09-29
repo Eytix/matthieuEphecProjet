@@ -12,6 +12,8 @@ import {Formation} from '../../../model/Formation';
 import {MatButton} from '@angular/material/button';
 import {MatChip, MatChipSet} from '@angular/material/chips';
 import {FormationService} from '../formation.service';
+import {RouterLink} from '@angular/router';
+import {FormationTagsComponent} from '../formation-tags/formation-tags.component';
 
 @Component({
   selector: 'app-formation-card',
@@ -26,7 +28,9 @@ import {FormationService} from '../formation.service';
     MatCardSubtitle,
     MatChipSet,
     MatChip,
-    NgClass
+    NgClass,
+    RouterLink,
+    FormationTagsComponent
   ],
   templateUrl: './formation-card.component.html',
   styleUrl: './formation-card.component.css'
@@ -40,9 +44,7 @@ export class FormationCardComponent {
     return new Date().getTime() > formation.date.getTime();
   }
 
-  isAngular(tag: string) {
-    return 'Angular' === tag;
-  }
+
 
   deleteFormation() {
     this.formationService.removeFormation(this.formation());

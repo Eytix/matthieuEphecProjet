@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Formation} from '../../model/Formation';
-import {uuid} from '../../shared/uuid';
+import {UUID, uuid} from '../../shared/uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,14 @@ export class FormationService {
 
   getCatalog() {
     return this.catalog;
+  }
+
+  getFormation(formationId:UUID) : Formation {
+    let formation = this.catalog.find(f => f.id === formationId);
+    if (!formation) {
+      throw new Error(`Formation with id ${formationId} not found`);
+    }
+    return formation;
   }
 
   addFormation(formation: Formation) {
