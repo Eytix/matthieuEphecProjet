@@ -19,5 +19,6 @@
     @if (!isDatePast(formation())) {
       <button mat-button type="button">Participer</button>
     }
+    <button (click)="deleteFormation()" mat-button type="button">Supprimer</button>
   </mat-card-footer>
 </mat-card>

@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {DatePipe, NgClass} from "@angular/common";
 import {
   MatCard,
@@ -11,6 +11,7 @@ import {
 import {Formation} from '../../../model/Formation';
 import {MatButton} from '@angular/material/button';
 import {MatChip, MatChipSet} from '@angular/material/chips';
+import {FormationService} from '../formation.service';
 
 @Component({
   selector: 'app-formation-card',
@@ -32,7 +33,8 @@ import {MatChip, MatChipSet} from '@angular/material/chips';
 })
 export class FormationCardComponent {
 
-  formation = input.required<Formation>()
+  formationService = inject(FormationService);
+  formation = input.required<Formation>();
 
   isDatePast(formation: Formation) {
     return new Date().getTime() > formation.date.getTime();
@@ -40,5 +42,9 @@ export class FormationCardComponent {
 
   isAngular(tag: string) {
     return 'Angular' === tag;
+  }
+
+  deleteFormation() {
+    this.formationService.removeFormation(this.formation());
   }
 }
