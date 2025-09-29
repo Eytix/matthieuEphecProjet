@@ -1,5 +1,5 @@
 import {Component, inject, input} from '@angular/core';
-import {DatePipe, NgClass} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {
   MatCard,
   MatCardContent,
@@ -10,7 +10,6 @@ import {
 } from "@angular/material/card";
 import {Formation} from '../../../model/Formation';
 import {MatButton} from '@angular/material/button';
-import {MatChip, MatChipSet} from '@angular/material/chips';
 import {FormationService} from '../formation.service';
 import {RouterLink} from '@angular/router';
 import {FormationTagsComponent} from '../formation-tags/formation-tags.component';
@@ -26,9 +25,6 @@ import {FormationTagsComponent} from '../formation-tags/formation-tags.component
     MatCardTitle,
     MatButton,
     MatCardSubtitle,
-    MatChipSet,
-    MatChip,
-    NgClass,
     RouterLink,
     FormationTagsComponent
   ],
@@ -43,7 +39,6 @@ export class FormationCardComponent {
   isDatePast(formation: Formation) {
     return new Date().getTime() > formation.date.getTime();
   }
-
 
 
   deleteFormation() {
