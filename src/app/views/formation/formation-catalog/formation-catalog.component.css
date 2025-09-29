@@ -1,0 +1,6 @@
+.create-formation-form {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
