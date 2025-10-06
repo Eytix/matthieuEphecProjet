@@ -5,4 +5,5 @@ export type Formation = {
   location: string;
   date: Date;
   tags: string[];
+  distance: number;
 }

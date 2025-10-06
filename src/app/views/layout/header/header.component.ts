@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
 
 @Component({
@@ -10,5 +10,7 @@ import {MatToolbar} from "@angular/material/toolbar";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  title = signal("Centre de formations");
 
 }

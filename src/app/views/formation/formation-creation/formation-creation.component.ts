@@ -32,10 +32,11 @@ export class FormationCreationComponent {
 
   form = new FormGroup({
     title: new FormControl<string>('', [Validators.required, Validators.maxLength(100)]),
-    location : new FormControl<string>('', [Validators.required]),
-    date : new FormControl<Date>(new Date(), [Validators.required]),
-    description : new FormControl<string>(''),
-    tags : new FormControl<string>('')
+    location: new FormControl<string>('', [Validators.required]),
+    date: new FormControl<Date>(new Date(), [Validators.required]),
+    description: new FormControl<string>(''),
+    tags: new FormControl<string>(''),
+    distance: new FormControl<number>(0, [Validators.required, Validators.min(1), Validators.max(100)])
   })
 
 
@@ -50,7 +51,8 @@ export class FormationCreationComponent {
       location: this.form.get('location')?.value!,
       date: this.form.get('date')?.value!,
       description: this.form.get('description')?.value || '',
-      tags: this.form.get('tags')?.value ? this.extractTags() : []
+      tags: this.form.get('tags')?.value ? this.extractTags() : [],
+      distance: this.form.get('distance')?.value!
     }
 
     this.formationService.addFormation(formation);

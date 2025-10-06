@@ -18,6 +18,6 @@ export class FormationDetailComponent {
   route = inject(ActivatedRoute)
   formationService = inject(FormationService);
   formationId = this.route.snapshot.paramMap.get('id')!;
-  formation:Formation = this.formationService.getFormation(this.formationId);
+  formation: Formation = this.formationService.getFormation(this.formationId);
 
 }

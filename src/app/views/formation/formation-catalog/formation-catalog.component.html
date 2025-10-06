@@ -1,3 +1,15 @@
-@for (formation of catalog; track formation.id) {
+<div class="flex flex-row items-center gap-2 p-4 border border-black rounded-xl shadow-md">
+  <mat-form-field class="example-full-width">
+    <mat-label>Filtrer</mat-label>
+    <input matInput [(ngModel)]="textFilter">
+  </mat-form-field>
+
+  <app-distance-slider [(value)]="distanceFilter"></app-distance-slider>
+
+  <button mat-button (click)="resetFilter()">Réinitialiser</button>
+</div>
+
+
+@for (formation of catalog(); track formation.id) {
   <app-formation-card [formation]="formation"></app-formation-card>
 }
