@@ -1,4 +1,4 @@
-import {Component, computed, inject, input} from '@angular/core';
+import {Component, computed, inject, input, model} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {
   MatCard,
@@ -34,12 +34,22 @@ import {FormationTagsComponent} from '../formation-tags/formation-tags.component
 export class FormationCardComponent {
 
   formationService = inject(FormationService);
-  formation = input.required<Formation>();
+  formation = model.required<Formation>();
   specialClass = input<string>('');
 
   isPast = computed(() => {
     return Date.now() > this.formation().date.getTime();
   });
+
+  postpone() {
+    this.formation.update(f => {
+      let newDate = new Date(f.date);
+      newDate.setDate(newDate.getDate() + 7);
+      f.date = newDate;
+
+      return { ...f, date: newDate };
+    });
+  }
 
   deleteFormation() {
     this.formationService.removeFormation(this.formation());
