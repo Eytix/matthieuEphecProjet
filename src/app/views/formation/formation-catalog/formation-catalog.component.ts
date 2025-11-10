@@ -38,6 +38,8 @@ export class FormationCatalogComponent {
   resetFilter() {
     this.textFilter.set('');
     this.distanceFilter.set(50);
+    this.datefilter.set(new Date());
+    // hello
   }
 
 }
