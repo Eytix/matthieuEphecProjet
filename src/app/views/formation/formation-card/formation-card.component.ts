@@ -14,6 +14,7 @@ import {FormationService} from '../formation.service';
 import {RouterLink} from '@angular/router';
 import {FormationTagsComponent} from '../formation-tags/formation-tags.component';
 import {MatChip} from "@angular/material/chips";
+import {MatCheckbox} from '@angular/material/checkbox';
 
 
 @Component({
@@ -29,7 +30,8 @@ import {MatChip} from "@angular/material/chips";
     MatCardSubtitle,
     RouterLink,
     FormationTagsComponent,
-    MatChip
+    MatChip,
+    MatCheckbox
   ],
   templateUrl: './formation-card.component.html',
   styleUrl: './formation-card.component.css'

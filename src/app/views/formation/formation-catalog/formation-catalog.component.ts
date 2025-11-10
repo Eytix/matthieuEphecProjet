@@ -32,7 +32,7 @@ export class FormationCatalogComponent {
 
   formationService = inject(FormationService);
 
-  textFilter = signal('')
+  textFilter = signal('');
   distanceFilter = signal(50);
   datefilter = signal(new Date());
 
