@@ -4,12 +4,15 @@ import {FormationService} from '../formation.service';
 import {Formation} from '../../../model/Formation';
 import {DatePipe} from '@angular/common';
 import {FormationTagsComponent} from '../formation-tags/formation-tags.component';
+import {MatChip} from "@angular/material/chips";
+
 
 @Component({
   selector: 'app-formation-detail',
   imports: [
     DatePipe,
-    FormationTagsComponent
+    FormationTagsComponent,
+    MatChip
   ],
   templateUrl: './formation-detail.component.html',
   styleUrl: './formation-detail.component.css'

@@ -15,7 +15,12 @@ export class FormationService {
       location: 'EPHEC',
       date: new Date("2025-09-20T10:30:00"),
       tags: ['Angular', 'TypeScript'],
-      distance: 10
+      distance: 10,
+      prix: 20,
+      horairestart: new Date("2025-09-20T9:30:00"),
+      horaireend: new Date("2025-09-20T18:30:00"),
+      nombreParticipant: 5,
+      nombreParticipantMax: 20
     },
     {
       id: uuid(),
@@ -24,7 +29,12 @@ export class FormationService {
       location: 'Remote',
       date: new Date("2026-01-10T10:30:00"),
       tags: ['Java', 'Springboot'],
-      distance: 25
+      distance: 25,
+      prix: 0,
+      horairestart: new Date("2025-09-20T10:30:00"),
+      horaireend: new Date("2025-09-20T15:30:00"),
+      nombreParticipant: 9,
+      nombreParticipantMax: 10
     }
   ]);
 

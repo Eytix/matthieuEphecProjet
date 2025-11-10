@@ -6,8 +6,18 @@
 
   <app-distance-slider [(value)]="distanceFilter"></app-distance-slider>
 
+  <mat-form-field>
+  <mat-label>Date minimum</mat-label>
+  <input matInput [value]="datefilter()" [matDatepicker]="datepicker2" (dateChange)="datefilter.set($event.value)">
+  <mat-hint>DD/MM/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="datepicker2"></mat-datepicker-toggle>
+  <mat-datepicker #datepicker2></mat-datepicker>
+</mat-form-field>
+
   <button mat-button (click)="resetFilter()">Réinitialiser</button>
+
 </div>
+
 
 
 @for (formation of catalog(); track formation.id) {

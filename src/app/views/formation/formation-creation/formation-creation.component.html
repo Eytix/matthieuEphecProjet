@@ -13,13 +13,32 @@
     <input matInput formControlName="location" placeholder="Lieu"/>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Date</mat-label>
-    <input matInput formControlName="date" [matDatepicker]="picker">
-    <mat-hint>DD/MM/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="datepicker">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Heure de début</mat-label>
+      <mat-hint>--:--</mat-hint>
+      <input matInput [matTimepicker]="timepicker1" formControlName="horairestart">
+      <mat-timepicker-toggle matIconSuffix [for]="timepicker1"></mat-timepicker-toggle>
+      <mat-timepicker #timepicker1></mat-timepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Heure de fin</mat-label>
+      <mat-hint>--:--</mat-hint>
+      <input matInput [matTimepicker]="timepicker2" formControlName="horaireend">
+      <mat-timepicker-toggle matIconSuffix [for]="timepicker2"></mat-timepicker-toggle>
+      <mat-timepicker #timepicker2></mat-timepicker>
+    </mat-form-field>
+  </div>
+
 
   <mat-form-field>
     <mat-label>Description</mat-label>
@@ -36,6 +55,24 @@
     <mat-label>Distance</mat-label>
     <input matInput type="number" formControlName="distance" placeholder="Distance"/>
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Prix</mat-label>
+    <input matInput type="number" formControlName="prix" placeholder="0€"/>
+  </mat-form-field>
+
+
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <mat-form-field appearance="outline"  style="max-width: 200px; flex: 1;">
+      <mat-label>Nombre de participants</mat-label>
+      <input matInput type="number" formControlName="nombreParticipant">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline"  style="max-width: 270px; flex: 1;">
+      <mat-label>Nombre maximum de participants</mat-label>
+      <input matInput type="number" formControlName="nombreParticipantMax">
+    </mat-form-field>
+  </div>
 
 
   <button type="submit" (click)="addFormation()" mat-button [disabled]="!form.valid">Ajouter</button>

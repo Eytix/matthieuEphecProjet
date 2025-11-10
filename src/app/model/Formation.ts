@@ -6,4 +6,10 @@ export type Formation = {
   date: Date;
   tags: string[];
   distance: number;
+  prix: number;
+  horairestart: Date;
+  horaireend: Date;
+  nombreParticipant: number;
+  nombreParticipantMax: number;
 }
+

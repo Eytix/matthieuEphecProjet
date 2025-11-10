@@ -13,6 +13,8 @@ import {MatButton} from '@angular/material/button';
 import {FormationService} from '../formation.service';
 import {RouterLink} from '@angular/router';
 import {FormationTagsComponent} from '../formation-tags/formation-tags.component';
+import {MatChip} from "@angular/material/chips";
+
 
 @Component({
   selector: 'app-formation-card',
@@ -26,7 +28,8 @@ import {FormationTagsComponent} from '../formation-tags/formation-tags.component
     MatButton,
     MatCardSubtitle,
     RouterLink,
-    FormationTagsComponent
+    FormationTagsComponent,
+    MatChip
   ],
   templateUrl: './formation-card.component.html',
   styleUrl: './formation-card.component.css'
@@ -54,4 +57,17 @@ export class FormationCardComponent {
   deleteFormation() {
     this.formationService.removeFormation(this.formation());
   }
+
+  formationAdd() {
+    this.formation.update(f => {
+      if (f.nombreParticipant < f.nombreParticipantMax) {
+        return {
+          ...f,
+          nombreParticipant: f.nombreParticipant+1
+        };
+      }
+      return f;
+    });
+  }
+
 }

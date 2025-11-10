@@ -7,6 +7,7 @@ import {Formation} from '../../../model/Formation';
 import {uuid} from '../../../shared/uuid';
 import {MatError, MatFormField, MatHint} from '@angular/material/form-field';
 import {FormationService} from '../formation.service';
+import {MatTimepickerModule} from '@angular/material/timepicker';
 
 @Component({
   selector: 'app-formation-creation',
@@ -21,7 +22,8 @@ import {FormationService} from '../formation.service';
     MatInput,
     MatLabel,
     MatSuffix,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTimepickerModule
   ],
   templateUrl: './formation-creation.component.html',
   styleUrl: './formation-creation.component.css'
@@ -36,7 +38,12 @@ export class FormationCreationComponent {
     date: new FormControl<Date>(new Date(), [Validators.required]),
     description: new FormControl<string>(''),
     tags: new FormControl<string>(''),
-    distance: new FormControl<number>(0, [Validators.required, Validators.min(1), Validators.max(100)])
+    distance: new FormControl<number>(0, [Validators.required, Validators.min(1), Validators.max(100)]),
+    prix: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
+    horairestart: new FormControl(new Date(), [Validators.required]),
+    horaireend: new FormControl(new Date(), [Validators.required]),
+    nombreParticipant: new FormControl<number>(0),
+    nombreParticipantMax: new FormControl<number>(0,[Validators.required, Validators.min(1)])
   })
 
 
@@ -52,7 +59,12 @@ export class FormationCreationComponent {
       date: this.form.get('date')?.value!,
       description: this.form.get('description')?.value || '',
       tags: this.form.get('tags')?.value ? this.extractTags() : [],
-      distance: this.form.get('distance')?.value!
+      distance: this.form.get('distance')?.value!,
+      prix: this.form.get('prix')?.value!,
+      horairestart: this.form.get('horairestart')?.value!,
+      horaireend: this.form.get('horaireend')?.value!,
+      nombreParticipant: this.form.get('nombreParticipant')?.value!,
+      nombreParticipantMax: this.form.get('nombreParticipantMax')?.value!
     }
 
     this.formationService.addFormation(formation);
@@ -63,4 +75,6 @@ export class FormationCreationComponent {
     let tagsAsString = this.form.get('tags')?.value!;
     return tagsAsString.split(',').map(t => t.trim());
   }
+
+
 }
