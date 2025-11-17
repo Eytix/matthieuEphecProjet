@@ -14,7 +14,15 @@
     <mat-datepicker #datepicker2></mat-datepicker>
   </mat-form-field>
 
+  <mat-form-field class="example-full-width">
+    <mat-label>Filtrer les tags</mat-label>
+    <input matInput [(ngModel)]="tagFilter">
+  </mat-form-field>
+
+
   <button mat-button (click)="resetFilter()">Réinitialiser</button>
+
+
 
 </div>
 

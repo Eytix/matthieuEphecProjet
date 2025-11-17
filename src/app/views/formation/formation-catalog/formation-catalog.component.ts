@@ -30,18 +30,24 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
 })
 export class FormationCatalogComponent {
 
+
   formationService = inject(FormationService);
 
   textFilter = signal('');
   distanceFilter = signal(50);
   datefilter = signal(new Date());
-
+  tagFilter = signal('');
+  
 
   catalog = computed(() => {
     return this.formationService.getCatalog().filter(formation => {
+
+      const tagOk = this.tagFilter() === '' || formation.tags?.some(t => t.toLowerCase().includes(this.tagFilter().toLowerCase()));
+
       return formation.title.toLowerCase().includes(this.textFilter())
         && formation.distance <= this.distanceFilter()
-        && formation.date >= this.datefilter();
+        && formation.date >= this.datefilter()
+        && tagOk;
     });
   });
 
@@ -49,6 +55,7 @@ export class FormationCatalogComponent {
     this.textFilter.set('');
     this.distanceFilter.set(50);
     this.datefilter.set(new Date());
+    this.tagFilter.set('');
     // hello
   }
 
