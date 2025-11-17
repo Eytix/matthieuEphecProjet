@@ -19,13 +19,21 @@
     <input matInput [(ngModel)]="tagFilter">
   </mat-form-field>
 
+  <mat-form-field class="example-full-width">
+    <mat-label>Prix le plus bas</mat-label>
+    <input matInput type="number" [(ngModel)]="lowPriceFilter" [min]="0">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Prix le plus haut</mat-label>
+    <input matInput type="number" [(ngModel)]="highPriceFilter" [min]="0">
+  </mat-form-field>
 
   <button mat-button (click)="resetFilter()">Réinitialiser</button>
 
 
 
 </div>
-
 
 
 @for (formation of catalog(); track formation.id) {

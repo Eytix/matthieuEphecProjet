@@ -2,7 +2,7 @@ import {Component, computed, inject, signal} from '@angular/core';
 import {FormationCardComponent} from '../formation-card/formation-card.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormationService} from '../formation.service';
-import {MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
+import {MatError, MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {DistanceSliderComponent} from '../../components/distance-slider/distance-slider.component';
@@ -37,7 +37,8 @@ export class FormationCatalogComponent {
   distanceFilter = signal(50);
   datefilter = signal(new Date());
   tagFilter = signal('');
-  
+  lowPriceFilter= signal(0);
+  highPriceFilter= signal(20);
 
   catalog = computed(() => {
     return this.formationService.getCatalog().filter(formation => {
@@ -47,7 +48,9 @@ export class FormationCatalogComponent {
       return formation.title.toLowerCase().includes(this.textFilter())
         && formation.distance <= this.distanceFilter()
         && formation.date >= this.datefilter()
-        && tagOk;
+        && tagOk
+        && this.lowPriceFilter() <= formation.prix
+        && this.highPriceFilter() >= formation.prix;
     });
   });
 
@@ -56,6 +59,8 @@ export class FormationCatalogComponent {
     this.distanceFilter.set(50);
     this.datefilter.set(new Date());
     this.tagFilter.set('');
+    this.lowPriceFilter.set(0);
+    this.highPriceFilter.set(20);
     // hello
   }
 
