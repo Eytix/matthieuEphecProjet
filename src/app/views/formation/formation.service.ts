@@ -1,65 +1,75 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, Signal} from '@angular/core';
 import {Formation} from '../../model/Formation';
-import {UUID, uuid} from '../../shared/uuid';
+import {UUID} from '../../shared/uuid';
+import {catchError, map, Observable, startWith, Subject, switchMap} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {FormationControllerService, FormationDto} from '../../api';
+import {formatDate} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationService {
 
-  private readonly catalog = signal<Formation[]>([
-    {
-      id: uuid(),
-      title: 'Angular - premiers pas',
-      description: 'Fais tes premiers pas avec Angular',
-      location: 'EPHEC',
-      date: new Date("2025-09-20T10:30:00"),
-      tags: ['Angular', 'TypeScript'],
-      distance: 10,
-      prix: 20,
-      horairestart: new Date("2025-09-20T9:30:00"),
-      horaireend: new Date("2025-09-20T18:30:00"),
-      nombreParticipant: 5,
-      nombreParticipantMax: 20
-    },
-    {
-      id: uuid(),
-      title: 'Java - Springboot',
-      description: 'Découvrez Springboot',
-      location: 'Remote',
-      date: new Date("2026-01-10T10:30:00"),
-      tags: ['Java', 'Springboot'],
-      distance: 25,
-      prix: 0,
-      horairestart: new Date("2025-09-20T10:30:00"),
-      horaireend: new Date("2025-09-20T15:30:00"),
-      nombreParticipant: 9,
-      nombreParticipantMax: 10
-    }
-  ]);
+  controller = inject(FormationControllerService)
 
-  constructor() {
+  private readonly refreshTrigger$ = new Subject<void>();
+  private readonly findFormations: Observable<Formation[]> = this.refreshTrigger$.pipe(
+    startWith([]),
+    switchMap(() => this.controller.formations()),
+    map(data => {
+      return data.map(this.mapFormation);
+    }),
+    catchError(err => {
+      console.error('Error fetching formations', err);
+      return [];
+    }));
+
+  private readonly mapFormation = (f: FormationDto) => {
+    return {
+      ...f,
+      date: new Date(f.date!),
+      distance: Math.floor(Math.random() * 100),
+    } as Formation
   }
 
-  getCatalog = this.catalog.asReadonly()
+  private readonly catalog: Signal<Formation[]> = toSignal(this.findFormations, {initialValue: []});
+
+  getCatalog = this.catalog;
 
   formationCount = computed(() => {
     return this.catalog().length;
   });
 
-  getFormation(formationId: UUID): Formation {
-    let formation = this.catalog().find(f => f.id === formationId);
-    if (!formation) {
-      throw new Error(`Formation with id ${formationId} not found`);
-    }
-    return formation;
+  getFormation(formationId: UUID): Signal<Formation> {
+    return toSignal(
+      this.controller.formation(formationId).pipe(
+        map(this.mapFormation),
+        catchError(err => {
+          console.error('Error fetching formation', err);
+          throw err;
+        })
+      ),
+      {initialValue: {} as Formation}
+    );
   }
 
   addFormation(formation: Formation) {
-    this.catalog.update(c => [...c, formation]);
+    const dto: FormationDto = {
+      ...formation,
+      date: formatDate(formation.date, "yyyy-MM-dd", "fr-BE"),
+      tags: formation.tags
+    }
+    this.controller.addFormation(dto).subscribe(() => {
+      console.log('Formation added ; will refresh');
+      this.refreshTrigger$.next();
+    })
   }
 
   removeFormation(formation: Formation) {
-    this.catalog.update(c => c.filter(f => f.id !== formation.id));
+    this.controller.deleteFormation(formation.id).subscribe(() => {
+      console.log('Formation removed ; will refresh');
+      this.refreshTrigger$.next();
+    })
   }
 }
