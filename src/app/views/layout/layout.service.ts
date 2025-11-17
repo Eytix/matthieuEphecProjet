@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, linkedSignal} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
@@ -17,13 +17,13 @@ export class LayoutService {
       .pipe(map(result => result.matches)),{initialValue: false}
   );
 
-  sideNavOpen= true;
+  sideNavOpen= linkedSignal(this.isDesktop);
 
   constructor() {
 
   }
 
   toggleMenu() {
-    this.sideNavOpen = !this.sideNavOpen
+    this.sideNavOpen.update(value => !value)
   }
 }
