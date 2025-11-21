@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, Signal} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormationService} from '../formation.service';
 import {Formation} from '../../../model/Formation';
@@ -21,6 +21,6 @@ export class FormationDetailComponent {
   route = inject(ActivatedRoute)
   formationService = inject(FormationService);
   formationId = this.route.snapshot.paramMap.get('id')!;
-  formation: Formation = this.formationService.getFormation(this.formationId);
+  formation: Signal<Formation> = this.formationService.getFormation(this.formationId);
 
 }

@@ -1,34 +1,34 @@
-<h1>{{ formation.title }}</h1>
+<h1>{{ formation().title }}</h1>
 <div class="flex flex-col gap-2 p-4">
   <div class="flex gap-2">
     <div class="font-bold">Lieu :</div>
-    <div>{{ formation.location }}</div>
+    <div>{{ formation().location }}</div>
   </div>
   <div class="flex gap-2">
     <div class="font-bold">Date :</div>
-    <div>{{ formation.date | date: 'dd/MM/yyyy' }}</div>
+    <div>{{ formation().date | date: 'dd/MM/yyyy' }}</div>
   </div>
   <div class="flex gap-2">
     <div class="font-bold">Distance : </div>
-    <div>{{ formation.distance }} km</div>
+    <div>{{ formation().distance }} km</div>
   </div>
   <div class="flex gap-2">
     <div class="font-bold">Nombre participants :</div>
-    {{ formation.nombreParticipant }} / {{ formation.nombreParticipantMax }}
+    {{ formation().nombreParticipant }} / {{ formation().nombreParticipantMax }}
   </div>
-  <div>@if (formation.prix > 0){
-    <p>Prix : {{formation.prix }}</p>
+  <div>@if (formation().prix > 0){
+    <p>Prix : {{formation().prix }}</p>
     }@else {
     <mat-chip class=" text-white font-semibold p-2 rounded" style="background-color: #39ff14"> C'EST GRATUIT</mat-chip>
     }
   </div>
   <div class="flex gap-2">
     <div class="font-bold">Horaire : </div>
-    <p>Horaire : {{formation.horairestart}} - {{formation.horaireend}}</p>
+    <p>Horaire : {{formation().horairestart}} - {{formation().horaireend}}</p>
   </div>
 
 
-  <p>{{ formation.description }}</p>
+  <p>{{ formation().description }}</p>
 
-  <app-formation-tags [tags]="formation.tags"></app-formation-tags>
+  <app-formation-tags [tags]="formation().tags"></app-formation-tags>
 </div>
