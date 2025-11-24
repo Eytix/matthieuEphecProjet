@@ -1,0 +1,22 @@
+GET http://localhost:8080/formations
+Content-Type: application/json
+
+###
+GET http://localhost:8080/formations/be1ee3a0-898b-433b-ae1f-b3f2ce97bc54
+Content-Type: application/json
+
+###
+POST http://localhost:8080/formations
+Content-Type: application/json
+
+{
+  "id": "61ece15d-136b-4e68-842f-0a5c68e8845e",
+  "title": "Le radis à travers les âges",
+  "description": "Vous ne le verrez plus de la même manière",
+  "location": "EPHEC",
+  "date": "2025-11-15",
+  "tags": ["Radis"]
+}
+
+###
+DELETE http://localhost:8080/formations/61ece15d-136b-4e68-842f-0a5c68e8845e
