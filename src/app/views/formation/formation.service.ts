@@ -5,6 +5,7 @@ import {catchError, map, Observable, startWith, Subject, switchMap} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {FormationControllerService, FormationDto} from '../../api';
 import {formatDate} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import {formatDate} from '@angular/common';
 export class FormationService {
 
   controller = inject(FormationControllerService)
+  snackBar = inject(MatSnackBar);
 
   private readonly refreshTrigger$ = new Subject<void>();
   private readonly findFormations: Observable<Formation[]> = this.refreshTrigger$.pipe(
@@ -63,6 +65,7 @@ export class FormationService {
     this.controller.addFormation(dto).subscribe(() => {
       console.log('Formation added ; will refresh');
       this.refreshTrigger$.next();
+      this.showNotification("Formation ajoutée");
     })
   }
 
@@ -70,6 +73,14 @@ export class FormationService {
     this.controller.deleteFormation(formation.id).subscribe(() => {
       console.log('Formation removed ; will refresh');
       this.refreshTrigger$.next();
+
+      this.showNotification("Formation supprimée");
+    })
+  }
+
+  private showNotification(message: string) {
+    this.snackBar.open(message, "", {
+      duration: 5000,
     })
   }
 }
