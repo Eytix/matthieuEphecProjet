@@ -9,5 +9,12 @@ public record Formation(UUID id,
                         String description,
                         String location,
                         LocalDate date,
-                        List<String> tags) {
+                        List<String> tags,
+                        int distance,
+                        int prix,
+                        LocalDate horairestart,
+                        LocalDate horaireend,
+                        int nombreParticipant,
+                        int nombreParticipantMax)
+{
 }
