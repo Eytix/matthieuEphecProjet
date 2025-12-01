@@ -1,5 +1,5 @@
 import {Component, computed, inject, input, model} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {
   MatCard,
   MatCardContent,
@@ -31,7 +31,8 @@ import {MatCheckbox} from '@angular/material/checkbox';
     RouterLink,
     FormationTagsComponent,
     MatChip,
-    MatCheckbox
+    MatCheckbox,
+    NgIf
   ],
   templateUrl: './formation-card.component.html',
   styleUrl: './formation-card.component.css'

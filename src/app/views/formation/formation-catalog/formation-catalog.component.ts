@@ -45,7 +45,7 @@ export class FormationCatalogComponent {
 
       const tagOk = this.tagFilter() === '' || formation.tags?.some(t => t.toLowerCase().includes(this.tagFilter().toLowerCase()));
 
-      return formation.title.toLowerCase().includes(this.textFilter())
+      return formation.title.toLowerCase().includes(this.textFilter().toLowerCase())
         && formation.distance <= this.distanceFilter()
         && formation.date >= this.datefilter()
         && tagOk

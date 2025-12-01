@@ -12,6 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class FormationService {
 
+  private apiUrl = 'http://localhost:8080/formations'
   controller = inject(FormationControllerService)
   snackBar = inject(MatSnackBar);
 
