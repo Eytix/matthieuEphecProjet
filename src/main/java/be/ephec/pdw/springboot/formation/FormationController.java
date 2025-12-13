@@ -1,5 +1,6 @@
 package be.ephec.pdw.springboot.formation;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/formations")
+@RequiredArgsConstructor
 public class FormationController {
 
-    private final FormationService formationService = new FormationService();
+    private final FormationService formationService;
 
     @GetMapping(produces = "application/json")
     public List<Formation> formations() {
