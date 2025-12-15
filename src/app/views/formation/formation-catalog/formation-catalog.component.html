@@ -38,3 +38,10 @@
 @for (formation of catalog(); track formation.id) {
   <app-formation-card [formation]="formation"></app-formation-card>
 }
+
+<mat-paginator [length]="filteredCatalog().length"
+               [pageSize]="pageSize()"
+               [pageSizeOptions]="[2, 4, 10, 25]"
+               (page)="onPageChange($event)"
+               aria-label="Select page">
+</mat-paginator>

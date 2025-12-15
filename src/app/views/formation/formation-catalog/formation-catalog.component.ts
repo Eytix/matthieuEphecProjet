@@ -9,6 +9,8 @@ import {DistanceSliderComponent} from '../../components/distance-slider/distance
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import { Router } from '@angular/router';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+
 
 
 @Component({
@@ -27,6 +29,7 @@ import { Router } from '@angular/router';
     MatDatepickerToggle,
     MatHint,
     MatSuffix,
+    MatPaginator,
   ],
   templateUrl: './formation-catalog.component.html',
   styleUrl: './formation-catalog.component.css'
@@ -34,6 +37,17 @@ import { Router } from '@angular/router';
 export class FormationCatalogComponent implements OnInit {
 
   formationService = inject(FormationService);
+
+  pageIndex = signal(0);
+  pageSize= signal(2);
+  formationCount = this.formationService.formationCount;
+
+  onPageChange(event: PageEvent){
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+  }
+
+
 
   constructor(
     private routeur: Router,
@@ -123,10 +137,14 @@ export class FormationCatalogComponent implements OnInit {
   lowPriceFilter= signal(0);
   highPriceFilter= signal(20);
 
-  catalog = computed(() => {
+  filteredCatalog = computed(() => {
     return this.formationService.getCatalog().filter(formation => {
 
-      const tagOk = this.tagFilter() === '' || formation.tags?.some(t => t.toLowerCase().includes(this.tagFilter().toLowerCase()));
+      const tagOk =
+        this.tagFilter() === '' ||
+        formation.tags?.some(t =>
+          t.toLowerCase().includes(this.tagFilter().toLowerCase())
+        );
 
       return formation.title.toLowerCase().includes(this.textFilter().toLowerCase())
         && formation.distance <= this.distanceFilter()
@@ -136,6 +154,15 @@ export class FormationCatalogComponent implements OnInit {
         && this.highPriceFilter() >= formation.prix;
     });
   });
+
+
+  catalog = computed(() => {
+    const start = this.pageIndex() * this.pageSize();
+    const end = start + this.pageSize();
+
+    return this.filteredCatalog().slice(start, end);
+  });
+
 
   resetFilter() {
     this.textFilter.set('');
