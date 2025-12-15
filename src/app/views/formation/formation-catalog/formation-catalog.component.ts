@@ -58,14 +58,6 @@ export class FormationCatalogComponent implements OnInit{
     });
   }
 
-  private parseDate(value: string): Date {
-    const day = Number(value.slice(0, 2));
-    const month = Number(value.slice(2, 4))-1;
-    const year = Number(value.slice(4, 8));
-    return new Date(year, month, day);
-  }
-
-
   updateQueryParams(params: Record<string, any>): void {
     this.routeur.navigate(
       [],
