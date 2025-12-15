@@ -2,4 +2,15 @@
   <h1>Bienvenue dans notre centre de formation</h1>
 
   <span>Nous vous proposons {{ formationCount() }} formations de top qualité</span>
+
+  <mat-card *ngFor="let formation of catalog(); trackBy: trackByFormation" class="max-w-3xl m-2 cursor-pointer">
+    <mat-card-header [routerLink]="'/formations/' + formation.id">
+      <mat-card-title>{{ formation.title }}</mat-card-title>
+      <app-formation-tags [tags]="formation.tags"></app-formation-tags>
+    </mat-card-header>
+
+    <a routerLink="/catalog" mat-list-item class="catalog-link">
+      Catalogue
+    </a>
+  </mat-card>
 </div>
