@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
   templateUrl: './formation-catalog.component.html',
   styleUrl: './formation-catalog.component.css'
 })
-export class FormationCatalogComponent implements OnInit{
+export class FormationCatalogComponent implements OnInit {
 
   formationService = inject(FormationService);
 
@@ -41,22 +41,28 @@ export class FormationCatalogComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.textFilter.set('');
-    this.distanceFilter.set(50);
-    this.datefilter.set(new Date());
-    this.tagFilter.set('');
-    this.lowPriceFilter.set(0);
-    this.highPriceFilter.set(20);
+    this.route.queryParams.subscribe(params => {
+      if (params['text']) this.textFilter.set(params['text']);
+      if (params['distance']) this.distanceFilter.set(+params['distance']);
+      if (params['datefilter']) this.datefilter.set(this.parseDate(params['datefilter']));
+      if (params['tag']) this.tagFilter.set(params['tag']);
+      if (params['minPrice']) this.lowPriceFilter.set(+params['minPrice']);
+      if (params['maxPrice']) this.highPriceFilter.set(+params['maxPrice']);
 
-    this.updateQueryParams({
-      text: null,
-      distance: null,
-      datefilter: null,
-      tag: null,
-      minPrice: null,
-      maxPrice: null
+      if (!params['text'] && !params['distance'] && !params['datefilter'] &&
+        !params['tag'] && !params['minPrice'] && !params['maxPrice']) {
+        this.resetFilter();
+      }
     });
   }
+  private parseDate(value: string): Date {
+    const day = Number(value.slice(0, 2));
+    const month = Number(value.slice(2, 4)) - 1;
+    const year = Number(value.slice(4, 8));
+
+    return new Date(year, month, day);
+  }
+
 
   updateQueryParams(params: Record<string, any>): void {
     this.routeur.navigate(
