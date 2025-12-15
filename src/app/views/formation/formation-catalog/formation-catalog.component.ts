@@ -1,12 +1,15 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {FormationCardComponent} from '../formation-card/formation-card.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormationService} from '../formation.service';
-import {MatError, MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {DistanceSliderComponent} from '../../components/distance-slider/distance-slider.component';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-formation-catalog',
@@ -23,15 +26,97 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
     MatDatepickerInput,
     MatDatepickerToggle,
     MatHint,
-    MatSuffix
+    MatSuffix,
   ],
   templateUrl: './formation-catalog.component.html',
   styleUrl: './formation-catalog.component.css'
 })
-export class FormationCatalogComponent {
-
+export class FormationCatalogComponent implements OnInit{
 
   formationService = inject(FormationService);
+
+  constructor(
+    private routeur: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.textFilter.set('');
+    this.distanceFilter.set(50);
+    this.datefilter.set(new Date());
+    this.tagFilter.set('');
+    this.lowPriceFilter.set(0);
+    this.highPriceFilter.set(20);
+
+    this.updateQueryParams({
+      text: null,
+      distance: null,
+      datefilter: null,
+      tag: null,
+      minPrice: null,
+      maxPrice: null
+    });
+  }
+
+  private parseDate(value: string): Date {
+    const day = Number(value.slice(0, 2));
+    const month = Number(value.slice(2, 4))-1;
+    const year = Number(value.slice(4, 8));
+    return new Date(year, month, day);
+  }
+
+
+  updateQueryParams(params: Record<string, any>): void {
+    this.routeur.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: params,
+        queryParamsHandling: 'merge'
+      }
+    );
+
+  }
+
+  onDateChange(date: Date | null): void {
+    if (!date) return;
+
+    const formatted = this.formatDate(date);
+    this.datefilter.set(date);
+
+    this.updateQueryParams({ datefilter: formatted });
+
+  }
+  private formatDate(date: Date): string {
+    const d = String(date.getDate()).padStart(2, '0');
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const y = date.getFullYear();
+    return `${d}${m}${y}`;
+  }
+
+  onTextFilterChange(value: string): void {
+    this.textFilter.set(value);
+    this.updateQueryParams({
+      text: value || null
+    });
+  }
+  onDistanceChange(value: number): void {
+    this.distanceFilter.set(value);
+    this.updateQueryParams({ distance: value });
+  }
+
+  onTagChange(value: string): void {
+    this.tagFilter.set(value);
+    this.updateQueryParams({ tag: value || null });
+  }
+
+  onPriceChange(): void {
+    this.updateQueryParams({
+      minPrice: this.lowPriceFilter(),
+      maxPrice: this.highPriceFilter()
+    });
+  }
+
 
   textFilter = signal('');
   distanceFilter = signal(50);
@@ -62,6 +147,14 @@ export class FormationCatalogComponent {
     this.lowPriceFilter.set(0);
     this.highPriceFilter.set(20);
     // hello
+    this.updateQueryParams({
+      text: null,
+      distance: null,
+      datefilter: null,
+      tag: null,
+      minPrice: null,
+      maxPrice: null
+    });
   }
 
 }
